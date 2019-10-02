@@ -1,0 +1,21 @@
+{
+  "name": "react-sample",
+  "repository": "",
+  "scripts": {
+    "build": "webpack -p",
+    "start": "webpack-dev-server -d --content-base ./public"
+  },
+  "dependencies": {
+    "clean-webpack-plugin": "^3.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "moment": "^2.24.0",
+    "ts-loader": "4.4.2",
+    "typescript": "3.0.1",
+    "webpack": "4.16.5",
+    "webpack-cli": "3.1.0",
+    "webpack-dev-server": "3.1.5"
+  },
+  "jspm": {
+    "moment": "npm:moment@^2.24.0"
+  }
+}

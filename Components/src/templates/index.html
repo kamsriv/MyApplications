@@ -1,0 +1,52 @@
+﻿<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>First React application</title>
+</head>
+<body>
+    <span id="root"></span>
+    <div id="contnets" class="container">
+        <form class="col-xs-5">
+            <div class="form-group row">
+                <label>First Name</label>
+                <input type="text" id="txtFName" class="form-control col-xs-7" placeholder="Enter first name" />
+            </div>
+            <div class="form-group row">
+                <label>Last Name</label>
+                <input type="text" id="txtLName" class="form-control col-xs-7" placeholder="Enter second name" />
+            </div>
+            <div class="form-group row">
+                <label>Birth Date</label>
+                <input type="date" id="txtBDate" class="form-control col-xs-7" />
+            </div>
+            <fieldset>
+                <legend>Address information</legend>
+                <div class="form-horizantal">
+                    <div class="col-xs-7 form-row">
+                        <input type="text" id="txtStreet" class="form-control" placeholder="Enter street" />
+                    </div>
+                    <div class="col-xs-7 form-row">
+                        <input type="text" id="txtNearby" class="form-control" placeholder="Enter nearest location" />
+                    </div>
+                    <div class="col-xs-7">
+                        <input type="text" id="txtCity" class="form-control" placeholder="Enter city" />
+                    </div>
+                    <div class="col-xs-7">
+                        <div class="col-xs-5 row">
+                            <input type="text" id="txtState" class="form-control" />
+                        </div>
+                        <div class="col-xs-7 row">
+                            <input type="number" id="txtZip" class="form-control" placeholder="Zip" />
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <br/>
+            <div class="form-group row">
+                <button type="button" id="btnSave" role="button" class="btn btn-primary">Save</button>
+                <button type="reset" role="button" class="btn btn-default">Cancel</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

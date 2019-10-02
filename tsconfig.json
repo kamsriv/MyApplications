@@ -1,0 +1,23 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "moment": [ "types/*" ] // This mapping is relative to "baseUrl"
+    },
+    "removeComments": true,
+    "sourceMap": true, //creates a source map file.
+    "outDir": "public",
+    //"outFile": "lib/app.js", //where the transpiled output will be placed.
+    "preserveConstEnums": true,
+    "watch": false,
+    "target": "es6",
+    "jsx": "react",
+    "module": "amd", //module should be amd to watch the files or referring other modules
+    "moduleResolution": "node" //for typescript2 version this setting is important https://momentjscom.readthedocs.io/en/latest/moment/00-use-it/09-typescript/
+  },
+  "include": [
+    "Compnents/src/ts/*.tsx",
+    "**/*"
+  ]
+}
