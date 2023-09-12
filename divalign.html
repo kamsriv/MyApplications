@@ -8,6 +8,43 @@
 	<!--Multi level menu can be created using the below link
 	https://codepen.io/vaibhavkalekar/pen/NVOoov -->
 <style>
+    .square
+    {
+        float: left;
+        margin:1pt;
+        width:72pt;
+        height:72pt;
+    }
+    .centerwrapper
+    {
+       margin: auto;
+       width: 302pt;
+    }
+.offcanvas-footer {
+        @extend .sticky-top;
+        bottom: 0;
+        top: auto;
+    }
+
+.sFloat{
+	background-color: #ccc;
+	width:50px;height:50px;
+	Position: absolute;
+	float:bottom;
+	bottom: 10px;
+	right: 10px;
+	border-radius:25px 25px 25px 25px;
+}
+.sFloat i{
+	margin: 15px;
+	color: white;
+	font-size: 25px;
+}
+.sFloat:hover{
+	background-color:#000;
+	cursor:pointer;
+}
+
 /* The side navigation menu */
 .sidenav {
   height: 100%; /* 100% Full-height */
@@ -56,11 +93,50 @@
   background-color: #ccc;
   display:inline;
 }
+.offcanvas-size-xl {
+    --bs-offcanvas-width: min(95vw, 600px) !important;
+}
+.offcanvas-size-xxl {
+    --bs-offcanvas-width: min(95vw, 90vw) !important;
+}
+.offcanvas-size-md { /* add Responsivenes to default offcanvas */
+    --bs-offcanvas-width: min(95vw, 400px) !important;
+}
+.offcanvas-size-sm {
+    --bs-offcanvas-width: min(95vw, 250px) !important;
+}
 
+.table-responsive{height:85vh;width:88%;overflow:auto;}
 
-.table-responsive{height:100vh;overflow:auto;} 
+@media only screen and (max-width: 600px) and (min-width:100px)
+{
+.table-responsive{height:100vh;width:100%;overflow:auto;} 
+.table-responsive td{background-color:red}
+}
 thead tr:nth-child(1) th{background: white; position: sticky;top: 0;z-index: 10;}
+.menuclose
+{
+  background-color: #818181;
+  border-radius: 20px;
+  width:20px;
+  height:20px;
+  display:flex;
+}
 </style>
+<script async src="https://cdn.jsdelivr.net/npm/es-module-shims@1/dist/es-module-shims.min.js" crossorigin="anonymous"></script>
+    <script type="importmap">
+    {
+      "imports": {
+		"@mdbootstrap/offcanvas": "https://cdn.jsdelivr.net/npm/@mdbootstrap/bootstrap-offcanvas.min.js",
+        "@popperjs/core": "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/esm/popper.min.js",
+        "bootstrap": "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.esm.min.js"
+      }
+    }
+    </script>
+    <script type="module">
+      import * as bootstrap from 'bootstrap'
+	  window.bootstrap = bootstrap;
+    </script>
 <script>
 /* Set the width of the side navigation to 250px */
 function openNav() {
@@ -75,14 +151,304 @@ function closeNav() {
   document.getElementById("main").style.marginLeft = "0";
   $("#main").removeClass("col-9").addClass("col-12");
 }
+
+//The problem is the card click event is propagating to inside elements. Instead use event.stopPropagation()...
+
+const products = document.getElementsByClassName("product");
+var myOffcanvas = document.getElementById('offcanvasBottom')
+    
+var productClick = function (event) {
+    //event.preventDefault()
+    //event.stopPropagation();
+    var bsOffcanvas = new bootstrap.Offcanvas(myOffcanvas);
+    bsOffcanvas.show();
+}
+
+Array.from(products).forEach(function (element) {
+    element.addEventListener("click", productClick);
+});
+
+<!-- $(function(){ -->
+    <!-- // Enables popover -->
+    <!-- $("[data-toggle=popover]").popover( -->
+    <!-- {container: 'body'} -->
+    <!-- ); -->
+<!-- }); -->
+
 </script>
 <body>
+
+
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+		<li class="nav-item">
+			<a class="nav-link" href="#sidebar_left" data-bs-toggle="offcanvas" aria-expanded="false">
+				<i class="fa fa-filter"></i>
+			</a>
+		</li>
+    </div>
+  </div>
+</nav>
+
+
+<!-- <div class="w-100 border py-2"> -->
+<!-- <a class="btn float-start d-inline offcanvas_btn" data-bs-toggle="offcanvas" href="#sidebar_left" role="button" aria-controls="sidebar_left" > -->
+<!-- <img src="https://www.bylde.com/assets/img/bylde-logo-small.webp?v=B01234567" class="img-fluid hlogo rounded"> -->
+<!-- </a> -->
+
+<!-- <a class="btn float-end d-inline" data-bs-toggle="offcanvas" href="#sidebar_right" role="button" aria-controls="sidebar_right"> -->
+<!-- Menu -->
+<!-- </a> -->
+
+<!-- <div class="clearfix"></div> -->
+<!-- </div> -->
+
+<!--Off canvas element for displaying the left side query/Filters panel-->
+<div class="offcanvas offcanvas-start offcanvas-size-sm" tabindex="-1" id="sidebar_left" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filters</h5>
+	<span class="mx-5 my-2"><i class="fa fa-filter" aria-hidden="true"></i></span>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+	<div  id="mySidenav">
+	<div class="left-content-container mt-0">
+	<div class="d-none list-group dismissable" id="settings" style="z-index:15;border:1px solid black;">
+	<div class="d-flex justify-content-end bg-light text-dark p-1 dismiss">&times</div>
+					<div class="list-group list-group-flush">
+							<a class="list-group-item list-group-item-action " onclick="aClick();" href="#">Remove
+							</a>
+							<a class="list-group-item list-group-item-action " href="#">Range</a>
+							<a class="list-group-item list-group-item-action " href="#">Exclude</a>
+					</div>
+	</div>
+	
+	<div class="left-content">
+			<div class="form-group" id="frmGrp1">
+				<span class="d-flex mr-2">
+						<span class="col-10 text-muted small">Pod Code</span>
+						<span class="text-primary col-2">
+							<i class="fa fa-thin fa-gear"></i>
+						</span>
+				</span>
+				
+				<div class="input-group mb-2">
+					<div class="input-group-prepend">
+					<select class="form-control form-control-sm w-10" data-toggle="dropdown" 
+					aria-haspopup="true" aria-expanded="false">
+						<option>=</option>
+						<option>!=</option>
+						<option>></option>
+						<option><</option>
+						<option>>=</option>
+					</select>
+					</div>
+					<input type="text" class="col-auto form-control form-control-sm mx-2" aria-label="Text input with dropdown button">
+			</div>
+			</div>
+			<div class="form-group">
+				<span class="d-flex mr-2">
+						<span class="col-10 text-muted small">Trading type</span>
+						<span class="text-primary col-2"><i class="fa fa-thin fa-gear"></i></span>
+				</span>
+				<div class="input-group mb-2">
+					<div class="input-group-prepend">
+					<select class="form-control form-control-sm w-10" data-toggle="dropdown" 
+					aria-haspopup="true" aria-expanded="false">
+						<option>=</option>
+						<option>!=</option>
+						<option>></option>
+						<option><</option>
+						<option>>=</option>
+					</select>
+					</div>
+					<select class="custom-select-sm mx-2 col-auto">
+						<option>Account</option>
+						<option>Strategy</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<span class="d-flex mr-2">
+						<span class="col-10 text-muted small">Asof Date</span>
+						<span class="text-primary col-2"><i class="fa fa-thin fa-gear"></i></span>
+				</span>
+				<div class="input-group mb-2">
+					<div class="input-group-prepend">
+					<select class="form-control form-control-sm w-10" data-toggle="dropdown" 
+					aria-haspopup="true" aria-expanded="false">
+						<option>=</option>
+						<option>!=</option>
+						<option>></option>
+						<option><</option>
+						<option>>=</option>
+					</select>
+					</div>
+					<input type="date" class="col-auto form-control form-control-sm mx-2" aria-label="Text with a calander control">
+				</div>
+			</div>
+			<div class="form-group">
+				<span class="d-flex mr-2">
+						<span class="col-10 text-muted small">Asof Date</span>
+						<span class="text-primary col-2"><i class="fa fa-thin fa-gear"></i></span>
+				</span>
+				<div class="input-group mb-2">
+					<div class="input-group-prepend">
+					<select class="form-control form-control-sm w-10" data-toggle="dropdown" 
+					aria-haspopup="true" aria-expanded="false">
+						<option>=</option>
+						<option>!=</option>
+						<option>></option>
+						<option><</option>
+						<option>>=</option>
+					</select>
+					</div>
+					<input type="date" class="col-auto form-control form-control-sm mx-2" aria-label="Text with a calander control">
+				</div>
+			</div>
+			<div class="form-group">
+				<span class="d-flex mr-2">
+						<span class="col-10 text-muted small">Asof Date</span>
+						<span class="text-primary col-2"><i class="fa fa-thin fa-gear"></i></span>
+				</span>
+				<div class="input-group mb-2">
+					<div class="input-group-prepend">
+					<select class="form-control form-control-sm w-10" data-toggle="dropdown" 
+					aria-haspopup="true" aria-expanded="false">
+						<option>=</option>
+						<option>!=</option>
+						<option>></option>
+						<option><</option>
+						<option>>=</option>
+					</select>
+					</div>
+					<input type="date" class="col-auto form-control form-control-sm mx-2" aria-label="Text with a calander control">
+				</div>
+			</div>
+			<div class="form-group">
+				<span class="d-flex mr-2">
+						<span class="col-10 text-muted small">Asof Date</span>
+						<span class="text-primary col-2"><i class="fa fa-thin fa-gear"></i></span>
+				</span>
+				<div class="input-group mb-2">
+					<div class="input-group-prepend">
+					<select class="form-control form-control-sm w-10" data-toggle="dropdown" 
+					aria-haspopup="true" aria-expanded="false">
+						<option>=</option>
+						<option>!=</option>
+						<option>></option>
+						<option><</option>
+						<option>>=</option>
+					</select>
+					</div>
+					<input type="date" class="col-auto form-control form-control-sm mx-2" aria-label="Text with a calander control">
+				</div>
+			</div>
+			<div class="form-group">
+				<span class="d-flex mr-2">
+						<span class="col-10 text-muted small">Asof Date</span>
+						<span class="text-primary col-2"><i class="fa fa-thin fa-gear"></i></span>
+				</span>
+				<div class="input-group mb-2">
+					<div class="input-group-prepend">
+					<select class="form-control form-control-sm w-10" data-toggle="dropdown" 
+					aria-haspopup="true" aria-expanded="false">
+						<option>=</option>
+						<option>!=</option>
+						<option>></option>
+						<option><</option>
+						<option>>=</option>
+					</select>
+					</div>
+					<input type="date" class="col-auto form-control form-control-sm mx-2" aria-label="Text with a calander control">
+				</div>
+			</div>
+			<div class="form-group">
+				<span class="d-flex mr-2">
+						<span class="col-10 text-muted small">Is Active</span>
+						<span class="text-primary col-2"><i class="fa fa-thin fa-gear"></i></span>
+				</span>
+				<div class="input-group mb-2">
+					<span class="d-flex border col-lg-12 p-2 rounded-1">
+						<input type="checkbox" />
+					</span>
+				</div>
+			</div>
+	</div>
+	</div>
+</div>
+</div>
+<div class="offcanvas-footer">
+ 		<button type="button" class="btn btn-primary btn-sm w-40 m-2">Submit</button>
+        <button type="button" class="btn btn-secondary btn-sm w-40 m-2">Cancel</button>
+</div>
+
+  </div>
+  
+  </div>
+</div>
+
+
+<div class="sFloat" data-bs-toggle="modal" data-bs-target="#exampleModal">
+	<i class="fa fa-search"></i>
+</div>
+  
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+		<form class="form" id="modal-form">
+			
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+var modal = document.getElementById('exampleModal');
+modal.addEventListener('shown.bs.modal',()=>{
+	$("#modal-form").html($('#mySidenav').html());
+});
+</script>
+
+<!--
 <div class='container-fluid d-flex flex-grow-1 flex-col min-vh-100'>
 <span onclick="openNav()" class="showbtn" class="min-vh-100">
 	<i class="fa fa-caret-right"></i>
 </span>
-
-<div class='sidenav' id="mySidenav">
+ <div class='sidenav' id="mySidenav">
 	<div>
 		<span class="d-flex text-primary">Filters
 			<span class="mx-5 my-2"><i class="fa fa-filter" aria-hidden="true"></i></span>
@@ -245,10 +611,11 @@ function closeNav() {
         <button type="button" class="btn btn-secondary btn-sm w-50 mx-2">Cancel</button>
 	</div>
 </div>
-<!--Main div-->
-	<div class='col-12 pl-2' id="main">
+</div>
+Main div-->
+<!--<div class='col-12 pl-2' id="main">
 	
-<div class="table-responsive">	
+	<div class="table-responsive">	
 <table class="table">
   <thead class="thead-dark">
     <tr>
@@ -354,7 +721,171 @@ function closeNav() {
 </table>
 </div>
 	</div>
+	</div>
+-->
 
-
+<div class = "container">
+  <div class="centerwrapper">
+    <div class = "square">...</div>
+    <div class = "square">...</div>
+    <div class = "square">...</div>
+    <div class = "square">...</div>
+  </div>
 </div>
+
+
+<div class="container-fluid border">
+	
+	<div class="table">
+		<div class='col-12 pl-2' id="main">
+	
+	<div class="w-auto">	
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+	
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+    </tr>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+    </tr>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+    </tr>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+    </tr>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+	</div>
+	
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"/>
+<script src="./jquery.smartmenus.min.js"/>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+$("[data-toggle='popover']").popover({
+    html: true, 
+	trigger: 'focus',
+	content: function() {
+          return $('#settings').html();
+        }
+});
+}
+)
+
+$('.fa-gear').on('click',function(obj){
+var x,y;
+
+	if($('#settings').hasClass('d-none'))
+	{
+	$('#settings').removeClass('d-none');
+		x = $(this).parent().parent().offset().left;
+		y = $(this).offset().top;
+	$(this).parent().append($('#settings'));
+	}
+	else{
+	$('#settings').addClass('d-none');
+	}
+	document.getElementById('settings').style.position ='absolute';
+    document.getElementById('settings').style.top = y;
+	document.getElementById('settings').style.left = x;
+});
+
+
+function aClick(obj)
+{
+	alert('hello');
+	document.getElementById('frmGrp1').remove();
+	document.getElementById('settings').className="d-none";
+}
+</script>
 </body>
